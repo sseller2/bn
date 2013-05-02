@@ -117,6 +117,7 @@ Let me start by saying that you shouldn't have been editing the `style.uncompres
 
 
 **Inspector Tools**
+
 Since toying with the CSS didn't help though, I would approach this by using a browser's inspector tool. For example, in later versions of Chrome there is a set of "developer tools" available from the main menu:
 
     Chrome Main Menu > View > Developer > Developer Tools
