@@ -5,9 +5,9 @@ Date: 5.2.2013
 ###1.)###
 >is there a way to simply link a cms page to the Exploded Menu? All the "hacks" I've found in the 
 >forum do not work.  We need to do this to respect the URL conventions we've already established. For 
->instance (http://www.brick-anew.com/brick-anew-policies.html) on our x-cart site would be 
->(http://magento.brick-anew.com/index.php/articles-home-improvement/brick-anew-policies.html) 
->if added to the exploded menu on the new site, since the "articles-home-improvement" portion 
+>instance `http://www.brick-anew.com/brick-anew-policies.html` on our x-cart site would be 
+>`http://magento.brick-anew.com/index.php/articles-home-improvement/brick-anew-policies.html` 
+>if added to the exploded menu on the new site, since the `articles-home-improvement` portion 
 >would be inherited from it's parent category "Resources" in the nav. Thus, we would lose 
 >traffic to the original link. 
 
@@ -43,7 +43,7 @@ Showing any `.php` filenames in this way allows an attacker to more readily prof
 >If not, can we get rid of the blue attribute column that generates on every "Category/ CMS Block" 
 >page? The column that helps refine search based on attributes (e.g., "Compare Products")
 >
->Second topic: I commented out the "ultcustomernav.phtml" page in order to get rid of the "My Cart and 
+>Second topic: I commented out the `ultcustomernav.phtml` page in order to get rid of the "My Cart and 
 >Account" section from the Nav Menu visually. 
 
 I'm not yet familiar with the layout but what you are describing sounds like a poor solution to achieve what you are trying to accomplish. If you comment code out but leave the associated containing element, such as a surrounding div, then that code still has to be parsed and acted upon by the browser. 
@@ -79,9 +79,10 @@ Same as above as far as not using comments. I would have to inspect the way orde
 ###4.)###
 >Since Magento interprets / for – 
 
->how can we keep the naming convention for URLs like (http://www.brick-anew.com/shop/fireplace-glass-
->doors/page1.html) when putting (/shop/fireplace-glass-doors/page1.html) into the Category URL Key 
->results in (http://magento.brick-anew.com/index.php/shop-fireplace-glass-doors-page1.html)  Won't we 
+>how can we keep the naming convention for URLs like 
+>`http://www.brick-anew.com/shop/fireplace-glass-doors/page1.html` when putting 
+>`/shop/fireplace-glass-doors/page1.html` into the Category URL Key 
+>results in `http://magento.brick-anew.com/index.php/shop-fireplace-glass-doors-page1.html`  Won't we 
 >lose traffic leading to this link?
 
 I would first investigate why Magento is making this re-write and attempt to ditch it if at all possible. Next I would try escaping my slashes when inputting them using the standard `\` character for escaping:
