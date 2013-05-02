@@ -1,4 +1,7 @@
->1) is there a way to simply link a cms page to the Exploded Menu? All the "hacks" I've found in the 
+#Questions from Steven#
+
+###1.)###
+>is there a way to simply link a cms page to the Exploded Menu? All the "hacks" I've found in the 
 >forum do not work.  We need to do this to respect the URL conventions we've already established. For 
 >instance (http://www.brick-anew.com/brick-anew-policies.html) on our x-cart site would be 
 >(http://magento.brick-anew.com/index.php/articles-home-improvement/brick-anew-policies.html) 
@@ -9,11 +12,13 @@
 There are multiple ways to do this. To accomplish what you are asking you need a `301 redirect` that would go within the `.htaccess` config file in the root directory of the new Magento site (assuming the current server is run off Apache). About 80% of servers are Apache but note that this solution is different if the server is a Microsoft IIS based system, CentOS based, etc.
 
 Google's Answer:
+    
     http://support.google.com/webmasters/bin/answer.py?hl=en&answer=93633
 
 You would redirect your old URL to your new one to prevent search engine links becoming broken and thus avoid all pages losing their SEO reputation.
 
 An example redirect:
+
     RewriteEngine on
     RewriteCond %{HTTP_HOST} ^www\.brick-anew\.com$
     RewriteRule ^(.*)$ http://www.magento.brick-anew.com [R=301,L]
@@ -30,8 +35,8 @@ Showing any `.php` filenames in this way allows an attacker to more readily prof
 
 
 
-
->2) If not, can we get rid of the blue attribute column that generates on every "Category/ CMS Block" 
+###2.)###
+>If not, can we get rid of the blue attribute column that generates on every "Category/ CMS Block" 
 >page? The column that helps refine search based on attributes (e.g., "Compare Products")
 >
 >Second topic: I commented out the "ultcustomernav.phtml" page in order to get rid of the "My Cart and 
@@ -53,8 +58,8 @@ Remove div w/ id "myDiv" using jQuery, after DOM ready:
 
 
 
-
->3) We do not want customers to have to log in to anything in order to place an order, how can we do 
+###3.)###
+>We do not want customers to have to log in to anything in order to place an order, how can we do 
 >this officially? (I realize that the commented-out code did not achieve this, I just did it for 
 >aesthetic reasons)
 
@@ -66,8 +71,8 @@ Same as above as far as not using comments. I would have to inspect the way orde
 
 
 
-
->4) Since Magento interprets / for – 
+###4.)###
+>Since Magento interprets / for – 
 
 >how can we keep the naming convention for URLs like (http://www.brick-anew.com/shop/fireplace-glass-
 >doors/page1.html) when putting (/shop/fireplace-glass-doors/page1.html) into the Category URL Key 
@@ -90,8 +95,8 @@ You would then enter that as your Category URL Key and the browser will decode i
 
 
 
-
->5) I've been able to add <ul> bullet points to Category pages like (http://magento.brick-anew.com/index
+###5.)###
+>I've been able to add <ul> bullet points to Category pages like (http://magento.brick-anew.com/index
 >.php/fireplace-gas-logs.html) however, I cannot enable them for our home page (http://magento.brick-
 >anew.com/).
 >I tried commenting out the "/* Lists */" and the "ult-callout-list" sections of the style.css and style
@@ -115,21 +120,25 @@ On a side note, when I inspected the `<ul>` elements on the home page I am seein
 
 
 
-
->6) I've been editing the Ult-Home-Top-Callout Block and I notice that the CSS formatting and "color 
+###6.)###
+>I've been editing the Ult-Home-Top-Callout Block and I notice that the CSS formatting and "color 
 >hover change" features are lost when the Java Script links in each <td> are deleted. How can I 
 >manipulate these <td>s in order to set up my own link paths, while still keeping the Java Script 
 >flare and CSS styling? (im sure it'll be in a JS file).  
 
-You will want to use the inspector tool described above. Inspect the elements with the JS in place and the inspector tool will give you all CSS rules being applied to the element, even if it is being set at runtime with a JS file. Apply the necessary CSS definitions to your new non-JS elements.
+
+You will want to again use the inspector tool described above. Inspect the elements with the JS in place and the inspector tool will give you all CSS rules being applied to the element, even if it is being set at runtime with a JS file. Apply the necessary CSS definitions to your new non-JS elements.
 
 Let's say that the inspector tool shows that my elements in question are standard links with a class of `navLink` contained within an HTML5 nav element:
+
 
     <nav>    
         <a href="./my/File/Path/Relative/to/Root.html" class="navLink">Link</a>
     </nav>
 
+
 The links have some CSS style for normal and hovered states, but it is being set via JavaScript on DOM ready:
+
 
     $(function(){
     	$('nav .navLink')
@@ -153,6 +162,7 @@ The links have some CSS style for normal and hovered states, but it is being set
 
 If I killed that JS then my example nav links wouldn't show up as styled block elements, instead they would be normal text links. Using the inspector tool on the links with the JS still applying the style will show you all of the properties being applied so you don't have to track down the file unnecessarily. Since I see what properties are being applied, I can then convert it over to plain CSS declarations for normal and hovered states:
 
+
     /* Normal */     
     nav a.navLink {
     	background: #000;
@@ -167,6 +177,7 @@ If I killed that JS then my example nav links wouldn't show up as styled block e
     	background: #FFF;
     	color: #000
     }
+
 
 At that point the JS is no longer needed and the affected JS lines should either be removed or, if possible, the entire script call can be removed from the DOM tree to improve browser performance. Note that to maintain best practices in my CSS I have carried the definition out to one level of specificity by including `nav` as the element where the links are contained, thereby avoiding conflicts with any possible instances of a class of `navLink` that may lie outside of the `<nav>` element. At least one level of specificity is considered best practice. Furthermore I defined my selector as `a.navLink` rather than `.navLink` to indicate that the properties should only be applied to `<a>` elements of class `navLink` rather than any element with that class.
 
