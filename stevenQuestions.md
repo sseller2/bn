@@ -1,4 +1,5 @@
 #Questions from Steven#
+Date: 5.2.2013
 
 ###1.)###
 >is there a way to simply link a cms page to the Exploded Menu? All the "hacks" I've found in the 
