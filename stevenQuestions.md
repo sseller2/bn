@@ -122,8 +122,8 @@ On a side note, when I inspected the `<ul>` elements on the home page I am seein
 
 ###6.)###
 >I've been editing the Ult-Home-Top-Callout Block and I notice that the CSS formatting and "color 
->hover change" features are lost when the Java Script links in each <td> are deleted. How can I 
->manipulate these <td>s in order to set up my own link paths, while still keeping the Java Script 
+>hover change" features are lost when the Java Script links in each `<td>` are deleted. How can I 
+>manipulate these `<td>`s in order to set up my own link paths, while still keeping the Java Script 
 >flare and CSS styling? (im sure it'll be in a JS file).  
 
 
