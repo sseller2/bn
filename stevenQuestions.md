@@ -114,7 +114,23 @@ You would then enter that as your Category URL Key and the browser will decode i
 
 **JavaScript/CSS/HTML File Minification**
 
-Let me start by saying that you shouldn't have been editing the `style.uncompressed.css` file because the Magento framework is going to be calling the minified/compressed version at `style.css`. Uncompressed/unminified files are for use in the development environment only, then are minified and deployed live. If your fix HAD been in one of those files, you would have first made the change in `style.uncompressed.css` because it is spaced and formatted to be readable by a human. The formatting, however, isn't necessary for a computer to read it and should be removed before deploying the file live to decrease file size in order to increase site load speed and decrease bandwidth cost. All of these non-essential spaces and comments are known as `syntactic sugar` and must be removed before going live, hence the existence of `style.css` to contain a version that is stripped down to a single huge line of code optimized for a browser's rendering engine but virtually unreadable to a human. All development should take place in `style.uncompressed.css`, even though this file will affect nothing on the live site, because this is the only file that is readable by a human eye. Once a change is made the contents of `style.uncompressed.css` should either be run through a build script to minify it automatically or it should be run through any common code minification tool available via text editor plugin or via an online minification tool. Both files will contain exactly the same CSS functionality if done correctly, the only difference being the removal of all unnecessary spaces, comments, etc.
+Let me start by saying that you shouldn't have been editing the `style.uncompressed.css` file because the Magento framework is going to be calling the minified/compressed version at `style.css`. Uncompressed/unminified files are for use in the development environment only, then are minified and deployed live. If your fix HAD been in one of those files, you would have first made the change in `style.uncompressed.css` because it is spaced and formatted to be readable by a human. The formatting, however, isn't necessary for a computer to read it and should be removed before deploying the file live to decrease file size in order to increase site load speed and decrease bandwidth cost. All of these non-essential spaces and comments are known as `syntactic sugar` and must be removed before going live, hence the existence of `style.css` to contain a version that is stripped down to a single huge line of code optimized for a browser's rendering engine but virtually unreadable to a human. 
+
+JS Beautifier is an online utility to format a file. It can unminify a minified JS/CSS/XHTML file but note that you shouldn't ever be moving from minified to unminified but rather the reverse. This tool is best to provide proper indenting, spacing and overall formatting to "beautify" your development version so it is readable and in the proper syntax:
+
+    http://jsbeautifier.org/
+
+One you are ready to minify/compress then online tools exist for this as well:
+
+    http://refresh-sf.com/yui/ 
+
+All development should take place in `style.uncompressed.css`, even though this file will affect nothing on the live site, because this is the only file that is readable by a human eye. Once a change is made the contents of `style.uncompressed.css` should either be run through a build script to minify it automatically or it should be run through any common code minification tool available via text editor plugin or via an online minification tool. Both files will contain exactly the same CSS functionality if done correctly, the only difference being the removal of all unnecessary spaces, comments, etc.
+
+If you want to see the difference in speed that the difference can make you may want to put up an uncompressed file, benchmark site speed, then put up the compressed version and repeat. 
+
+Monitor Site Speed:
+
+    http://www.webpagetest.org/
 
 
 **Inspector Tools**
@@ -123,7 +139,11 @@ Since toying with the CSS didn't help though, I would approach this by using a b
 
     Chrome Main Menu > View > Developer > Developer Tools
 
-The inspection tool is represented by a magnifying glass icon, as is the case in most other browser inspection tools, such as the Firebug plugin for Firefox. Clicking the mag glass icon starts the tool, allowing you to click any page element to see the element's generated html source, which can be notably different from the unrendered html that you would see via a browser's `view source` option. 
+The inspection tool is represented by a magnifying glass icon, as is the case in most other browser inspection tools, such as the Firebug plugin for Firefox (link below). Clicking the mag glass icon starts the tool, allowing you to click any page element to see the element's generated html source, which can be notably different from the unrendered html that you would see via a browser's `view source` option. 
+
+Firebug for FireFox:
+
+    http://getfirebug.com/
 
 Also displayed in the inspector tool are all the CSS rules being applied to the element being inspected as well as the location of the CSS file/line applying the rule. Your bullet issue would likely be CSS related as you surmised, but I see bullets currently in Chrome on Mac OS X so I am not sure if you have already fixed this issue. 
 
