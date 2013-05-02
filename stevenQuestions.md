@@ -19,6 +19,7 @@ Google's Answer:
 
 You would redirect your old URL to your new one to prevent search engine links becoming broken and thus avoid all pages losing their SEO reputation.
 
+**.htaccess 301 redirect**
 An example redirect:
 
     RewriteEngine on
@@ -51,6 +52,7 @@ Although nothing comes through on the front end, browser overhead is being creat
 Instead of commenting code out and if it is impossible to have the items removed before deployment, the containing element should be removed from the DOM completely to avoid the browser being forced to act, as described above.
 
 Remove div w/ id "myDiv" using jQuery, after DOM ready:
+    
     $(function(){
     	$('#myDiv').remove();
     });
@@ -85,6 +87,7 @@ I would first investigate why Magento is making this re-write and attempt to dit
 
     \/shop\/fireplace-glass-doors\/page1.html
 
+**Encoding File Paths**
 Although escaping in this way may work, it is considered best practice to encode the path to prevent different interpretations of the path between different browsers. 
 
 This can be accomplished via JavaScript's `encodeURI()` function:
@@ -98,23 +101,29 @@ You would then enter that as your Category URL Key and the browser will decode i
 
 
 ###5.)###
->I've been able to add <ul> bullet points to Category pages like (http://magento.brick-anew.com/index
->.php/fireplace-gas-logs.html) however, I cannot enable them for our home page (http://magento.brick-
->anew.com/).
->I tried commenting out the "/* Lists */" and the "ult-callout-list" sections of the style.css and style
->.uncompressed.css sheets, neither worked. The "/* Lists */" method showed me the bullet points for all 
->the products and attributes that were being hidden by the CSS (ugly).  So, is there a way to show 
->bullet points on the main page?
+>I've been able to add `<ul>` bullet points to Category pages like 
+>`http://magento.brick-anew.com/index.php/fireplace-gas-logs.html` however, I cannot enable them for 
+>our home page `http://magento.brick-anew.com/`.
+>I tried commenting out the `/* Lists */` and the `ult-callout-list` sections of the `style.css` and 
+>`style.uncompressed.css` sheets, neither worked. The `/* Lists */` method showed me the bullet points 
+>for all the products and attributes that were being hidden by the CSS (ugly).  So, is there a way to 
+>show bullet points on the main page?
 
-I would approach this by using an inspector tool. For example, in later versions of Chrome there is a set of "developer tools" available from the main menu:
+**JavaScript/CSS/HTML File Minification**
+Let me start by saying that you shouldn't have been editing the `style.uncompressed.css` file because the Magento framework is going to be calling the minified/compressed version at `style.css`. Uncompressed/unminified files are for use in the development environment only, then are minified and deployed live. If your fix HAD been in one of those files, you would have first made the change in `style.uncompressed.css` because it is spaced and formatted to be readable by a human. The formatting, however, isn't necessary for a computer to read it and should be removed before deploying the file live to decrease file size in order to increase site load speed and decrease bandwidth cost. All of these non-essential spaces and comments are known as `syntactic sugar` and must be removed before going live, hence the existence of `style.css` to contain a version that is stripped down to a single huge line of code optimized for a browser's rendering engine but virtually unreadable to a human. All development should take place in `style.uncompressed.css`, even though this file will affect nothing on the live site, because this is the only file that is readable by a human eye. Once a change is made the contents of `style.uncompressed.css` should either be run through a build script to minify it automatically or it should be run through any common code minification tool available via text editor plugin or via an online minification tool. Both files will contain exactly the same CSS functionality if done correctly, the only difference being the removal of all unnecessary spaces, comments, etc.
+
+
+**Inspector Tools**
+Since toying with the CSS didn't help though, I would approach this by using a browser's inspector tool. For example, in later versions of Chrome there is a set of "developer tools" available from the main menu:
 
     Chrome Main Menu > View > Developer > Developer Tools
 
-The inspection tool is represented by a magnifying glass icon, as is the case in most other browser inspection tools as well. Clicking the icon starts the tool, allowing a developer to click any page elements to see the element's generated/rendered html source, which can be notably different from the unrendered html that you would see via a browser's `view source` option. 
+The inspection tool is represented by a magnifying glass icon, as is the case in most other browser inspection tools, such as the Firebug plugin for Firefox. Clicking the mag glass icon starts the tool, allowing you to click any page element to see the element's generated html source, which can be notably different from the unrendered html that you would see via a browser's `view source` option. 
 
-Also displayed in the inspector tool is all the CSS rules being applied to the element being inspected, as well as the location of the CSS applying the rule. Your bullet issue would likely be CSS related as you spotted, and I see bullets currently in Chrome on Mac OS X so I am not sure if you have already fixed this issue. 
+Also displayed in the inspector tool are all the CSS rules being applied to the element being inspected as well as the location of the CSS file/line applying the rule. Your bullet issue would likely be CSS related as you surmised, but I see bullets currently in Chrome on Mac OS X so I am not sure if you have already fixed this issue. 
 
-On a side note, when I inspected the `<ul>` elements on the home page I am seeing many browser specific prefixes to support CSS definitions that have not been formalized and included in the official releases of CSS standards currently. However, on the elements using prefixes I am not seeing any future proofing in place. "Future proofing" is a way to make sure the code will not break in time with the release of new browsers that may drop support for the prefixes, a likely scenario once the experimental CSS definitions are standardized. Right now on unordered lists on the home page I am seeing properties like `-webkit-margin-end` to provide support for the WebKit rendering engine currently used by Chrome and Safari, as well as `-moz-margin-end` to provide support for Firefox and its Gecko engine. However, I see no subsequent definition for `margin-end` without the prefix. If it can reasonably be assumed that a CSS feature will become standard, a definition such as `margin-end` with no prefix should be specified in addition to the prefixed definitions to future proof the code, so that if prefixes are not supported in future browsers the rule will still be applied if `margin-end` has by that point become standard.
+**Future Proofing**
+On another side note, when I inspected the `<ul>` elements on the home page I am seeing many browser specific prefixes to support CSS definitions that have not been formalized and included in the official releases of CSS standards currently. However, on the elements using prefixes I am not seeing any future proofing in place. "Future proofing" is a way to make sure the code will not break in time with the release of new browsers that may drop support for the prefixes, a likely scenario once the experimental CSS definitions are standardized. Right now on unordered lists on the home page I am seeing properties like `-webkit-margin-end` to provide support for the WebKit rendering engine currently used by Chrome and Safari, as well as `-moz-margin-end` to provide support for Firefox and its Gecko engine. However, I see no subsequent definition for `margin-end` without the prefix. If it can reasonably be assumed that a CSS feature will become standard, a definition such as `margin-end` with no prefix should be specified in addition to the prefixed definitions to future proof the code, so that if prefixes are not supported in future browsers the rule will still be applied if `margin-end` has by that point become standard.
 
 
 
@@ -180,7 +189,7 @@ If I killed that JS then my example nav links wouldn't show up as styled block e
     	color: #000
     }
 
-
+**CSS Specificity**
 At that point the JS is no longer needed and the affected JS lines should either be removed or, if possible, the entire script call can be removed from the DOM tree to improve browser performance. Note that to maintain best practices in my CSS I have carried the definition out to one level of specificity by including `nav` as the element where the links are contained, thereby avoiding conflicts with any possible instances of a class of `navLink` that may lie outside of the `<nav>` element. At least one level of specificity is considered best practice. Furthermore I defined my selector as `a.navLink` rather than `.navLink` to indicate that the properties should only be applied to `<a>` elements of class `navLink` rather than any element with that class.
 
 Although it may seem cumbersome, these are considered best practices for a huge number of reasons. Most notably, at least one level of specificity helps to avoid naming conflicts that become quite likely with multiple developers and a large code base. By being this specific I'm making sure that I wouldn't be accidentally overwriting any other elements that may have this class but with a different set of style definitions. Secondly, browser performance is improved through specificity both in JavaScript and CSS because it is a more accurate description of where the element is located. Rather than wasting resource overhead by browsing the entire DOM tree for instances of `navLink`, now the browser's CSS rendering engine is being told it only has to look within the `<nav>` element rather than through the entire document. The process for the engine to search and apply the style properties then becomes much faster and further helps site speed.
