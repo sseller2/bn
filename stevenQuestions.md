@@ -2,6 +2,8 @@
 **Date: 5.2.2013**
 ---------------------
 
+###Author: Fleming Slone###
+
 Although written in response to questions about the Magento e-commerce framework, I have tried to include adequate information in my answers to help solve potential problems I see arising and to also provide a general reference on certain topics, marked in bold below.
 
 ###1.)###
@@ -260,7 +262,8 @@ Although it may seem cumbersome, these are considered best practices for a huge 
 
 **Getting Picky About Speed**
 
-I once worked on a site that averaged 4 million unique visitors a day and with so many visitors we would go to extra lengths to increase speed and reduce database overhead. One method we used included alphabetizing the CSS properties, as in my example CSS above. When a browser renders the document it alphabetizes all CSS property definitions as part of the process and by alphabetizing definitions ahead of time we squeezed out extra performance saving the browser this additional task, just one example that you can get as crazy as you want to if you are trying to optimize your code =)
+Since I mentioned it several times I wanted to talk some about site speed. I once worked on a site that averaged 4 million unique visitors a day and with so many visitors we would go to extra lengths to increase speed and reduce database overhead. One method we used included alphabetizing the CSS properties, as in my example CSS above. When a browser renders the document it alphabetizes all CSS property definitions and by alphabetizing definitions ahead of time we squeezed out extra performance saving the browser from requiring this additional task. That's just one example that you can get as freaky as you want to if you are trying to optimize your code =)
+
 
 -Flem
 
