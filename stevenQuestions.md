@@ -17,7 +17,7 @@ Google's Answer:
     
     http://support.google.com/webmasters/bin/answer.py?hl=en&answer=93633
 
-You would redirect your old URL to your new one to prevent search engine links becoming broken and thus avoid all pages losing their SEO reputation.
+You will have to redirect your old URL to your new one to prevent links breaking. Mistakes in this area can be costly and can ultimately result in search engine results breaking, external site links pointing inward breaking, and ultimately the entire SEO reputation of the site being lost.
 
 **.htaccess 301 redirect**
 
@@ -27,16 +27,39 @@ An example redirect:
     RewriteCond %{HTTP_HOST} ^www\.brick-anew\.com$
     RewriteRule ^(.*)$ http://www.magento.brick-anew.com [R=301,L]
 
-That example would redirect all `www.brick-anew.com` requests to `www.magento.brick-anew.com`. In this way your link in the exploded menu could be to the new URL or to the old URL since one is being forwarded to the other. Be sure to use relative rather than absolute paths for all links, image sources and external code sources, like JavaScript files.
+That example would redirect all `www.brick-anew.com` requests to `www.magento.brick-anew.com`. After writing the redirect your link in the "exploded menu" can be to the old URL or to the new URL since the former is being forwarded to the latter. 
 
 Finally, be sure to hide `index.php` in the url using these redirects. The `index.php` portion of the URL is negative because it serves no purpose in describing the link, making it unnecessarily complicated and more likely to be truncated in search results. 
 
 Showing any `.php` filenames in this way allows an attacker to more readily profile a target for vulnerabilities and ways to break past site security. Because I know just from the URL that the site uses PHP, I automatically know that it may be vulnerable to SQL injection or XSS scripting attacks. A file extension of `.php` is also debated in SEO circles because it is an immediate red flag that a site is being served from a database, thus more likely to be spam.
 
+**Writing Relative Links**
 
+One reason you are encountering this problem is because most of the site was built using absolute link paths because of SEO superstition about link paths in years past. You can avoid this in the future if you be sure to use relative link paths rather than absolute paths for all links, image sources and external code sources, like JavaScript files.
 
+Proper relative link:
 
+    ../fireplace-doors/my-fireplace-doors.html
 
+In this example we first move up one directory from the directory of our current page, then move down the directory into `/fireplace-doors/` in order to point to the `my-fireplace-doors.html` page.
+
+Bad absolute link:
+
+    http://www.brick-anew.com/fireplace-doors/my-fireplace-doors.html
+
+Here the link is hard coded with a path and can cause numerous problems. If the base domain were changed these would break and have to be redirected as is currently the case. Worse, if someone is on the SSL version of the page with the protocol `https://` this link would take them away from their secure session and dump them on an unsecure `http://` page against their will. 
+
+Protocols become especially important when linking `src` paths for images and external files. Say we use this script call:
+
+    <script type='text/javascript' src='http://www.brick-anew.com/myJS.js'></script>
+
+When a user reaches a secure `https` page the browser will throw an insecure session error because non-secure content is being served into an area intended to be secure, such as a checkout page. For this reason it is extremely important to be `protocol agnostic`, meaning that you call files with the current protocol of a page, whatever that may be.
+
+Protocol agnostic version:
+
+    <script type='text/javascript' src='//www.brick-anew.com/myJS.js'></script>
+
+Setting up all images and JS in this way will cure insecure page errors in the vast majority of situations where you may be seeing that particular error.
 
 
 ###2.)###
@@ -46,20 +69,23 @@ Showing any `.php` filenames in this way allows an attacker to more readily prof
 >Second topic: I commented out the `ultcustomernav.phtml` page in order to get rid of the "My Cart and 
 >Account" section from the Nav Menu visually. 
 
-I'm not yet familiar with the layout but what you are describing sounds like a poor solution to achieve what you are trying to accomplish. If you comment code out but leave the associated containing element, such as a surrounding div, then that code still has to be parsed and acted upon by the browser. 
+I'm not yet familiar with the layout but what you are describing sounds like a poor solution to achieve what you are trying to accomplish. If you comment code out but still leave the lines in place  then that code still has to be parsed and acted upon by the browser. 
 
-Although nothing comes through on the front end, browser overhead is being created to read through comments, which in turn slows the site speed. No comments should ever be displayed on a live production site, all should be stripped via a build file to ensure any code commenting is restricted to your development environment.
+Although nothing comes through on the front end, browser overhead is wasted having to read through comments which in turn slows the site speed. No comments should ever be displayed on a live production site, all should be stripped via a build file to ensure any code commenting is restricted to your development environment.
 
-Instead of commenting code out and if it is impossible to have the items removed before deployment, the containing element should be removed from the DOM completely to avoid the browser being forced to act, as described above.
+Say we want to get rid of a particular div with id `myDiv` but we can't remove the lines for whatever reason. Rather than commenting the lines out, the element should be removed from the DOM completely by JavaScript at runtime to get it off the page, a process known as `duck punching`:
 
-Remove div w/ id "myDiv" using jQuery, after DOM ready:
+Remove using jQuery after DOM ready:
     
     $(function(){
     	$('#myDiv').remove();
     });
-    
 
+Or if not necessary to wait on DOM ready the function can be immediately invoked:
 
+    (function(){
+        $('#myDiv').remove();
+    }());
 
 
 
@@ -225,7 +251,9 @@ To understand the hierarchy of CSS selectors and learn more about specificity, S
 
 Although it may seem cumbersome, these are considered best practices for a huge number of reasons. Most notably, at least one level of specificity helps to avoid naming conflicts that become quite likely with multiple developers and a large code base. By being this specific I'm making sure that I wouldn't be accidentally overwriting any other elements that may have this class but with a different intended set of definitions. Secondly, browser performance is improved through specificity, both in JavaScript and CSS, as it more accurately describes an element's location. Rather than wasting resource overhead by browsing the entire DOM tree for instances of class `navLink`, here the browser's CSS rendering engine is being told it only has to look within the `<nav>` element rather than through the entire document, providing speed benefits. 
 
-I worked on a site for a while that averaged about 4 million unique visitors a day, so with so many visitors we went for even more speed improvement any way we could get it. That included alphabetizing the CSS properties, as in my example above, because when a browser renders the document it alphabetizes all CSS property definitions as part of the process. By alphabetizing definitions ahead of time we squeezed out extra performance by saving the browser this additional task, so you can get as crazy as you want to if you are trying to optimize your code =)
+**Getting Picky About Speed**
+
+I once worked on a site that averaged 4 million unique visitors a day and with so many visitors we would go to extra lengths to increase speed and reduce database overhead. One method we used included alphabetizing the CSS properties, as in my example CSS above. When a browser renders the document it alphabetizes all CSS property definitions as part of the process and by alphabetizing definitions ahead of time we squeezed out extra performance saving the browser this additional task, just one example that you can get as crazy as you want to if you are trying to optimize your code =)
 
 -Flem
 
