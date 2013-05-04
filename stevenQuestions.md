@@ -17,11 +17,11 @@ Google's Answer:
     
     http://support.google.com/webmasters/bin/answer.py?hl=en&answer=93633
 
-You will have to redirect your old URL to your new one to prevent links breaking. Mistakes in this area can be costly and can ultimately result in search engine results breaking, external site links pointing inward breaking, and ultimately the entire SEO reputation of the site being lost.
+You will have to redirect your old URL to your new one to prevent links breaking. Mistakes in this area can be costly and can ultimately result in search engine results breaking, site links pointing to you breaking, internal linking breaking and ultimately the entire SEO reputation of the site being lost.
 
 **.htaccess 301 redirect**
 
-An example redirect:
+An example redirect for the base URL:
 
     RewriteEngine on
     RewriteCond %{HTTP_HOST} ^www\.brick-anew\.com$
@@ -29,13 +29,13 @@ An example redirect:
 
 That example would redirect all `www.brick-anew.com` requests to `www.magento.brick-anew.com`. After writing the redirect your link in the "exploded menu" can be to the old URL or to the new URL since the former is being forwarded to the latter. 
 
-Finally, be sure to hide `index.php` in the url using these redirects. The `index.php` portion of the URL is negative because it serves no purpose in describing the link, making it unnecessarily complicated and more likely to be truncated in search results. 
+Finally, be sure to hide `index.php` in the url using these redirects, and I would personally hide any file extension for pages. The `.php` extension being served in the URL here is negative because it serves no purpose in describing the link and just makes it unnecessarily complicated and more likely to be truncated in search results, etc. where the URL might be displayed with a max character count applied. 
 
-Showing any `.php` filenames in this way allows an attacker to more readily profile a target for vulnerabilities and ways to break past site security. Because I know just from the URL that the site uses PHP, I automatically know that it may be vulnerable to SQL injection or XSS scripting attacks. A file extension of `.php` is also debated in SEO circles because it is an immediate red flag that a site is being served from a database, thus more likely to be spam.
+Showing any `.php` filenames or other server side extensions in this way allows an attacker to more readily profile a target for vulnerabilities and find ways to break past site security. Because I know just from the URL that the site uses PHP, I automatically know that it may be vulnerable to SQL injection or XSS scripting attacks. A file extension of `.php` is also debated in SEO circles because it is an immediate red flag that a site is being served from a database, thus more likely to be computer generated spam and not handmade content.
 
 **Writing Relative Links**
 
-One reason you are encountering this problem is because most of the site was built using absolute link paths because of SEO superstition about link paths in years past. You can avoid this in the future if you be sure to use relative link paths rather than absolute paths for all links, image sources and external code sources, like JavaScript files.
+One reason you are encountering this problem is because most of the site was built using absolute link paths because of SEO superstition about link paths in years past. You can avoid this cropping up again in the future if you be sure to use relative link paths rather than absolute paths for all links, image sources and external code sources, like JavaScript files.
 
 Proper relative link:
 
@@ -43,23 +43,23 @@ Proper relative link:
 
 In this example we first move up one directory from the directory of our current page, then move down the directory into `/fireplace-doors/` in order to point to the `my-fireplace-doors.html` page.
 
-Bad absolute link:
+Less flexible absolute link:
 
     http://www.brick-anew.com/fireplace-doors/my-fireplace-doors.html
 
-Here the link is hard coded with a path and can cause numerous problems. If the base domain were changed these would break and have to be redirected as is currently the case. Worse, if someone is on the SSL version of the page with the protocol `https://` this link would take them away from their secure session and dump them on an unsecure `http://` page against their will. 
+Here the link is hard coded with a path and can cause numerous problems as written. If the base domain were changed these would break and have to be redirected, as is currently the case. Worse, if someone is on the SSL version of the page with the protocol `https` this link would take them away from their secure session and dump them on an unsecure `http` page against their will. 
 
 Protocols become especially important when linking `src` paths for images and external files. Say we use this script call:
 
     <script type='text/javascript' src='http://www.brick-anew.com/myJS.js'></script>
 
-When a user reaches a secure `https` page the browser will throw an insecure session error because non-secure content is being served into an area intended to be secure, such as a checkout page. For this reason it is extremely important to be `protocol agnostic`, meaning that you call files with the current protocol of a page, whatever that may be.
+When a user reaches a secure `https` page the browser will throw an insecure session error because non-secure content is being served into an area intended to be secure, such as a checkout page. For this reason it is extremely important to be `protocol agnostic`, meaning that you call files with the same  protocol as the requesting page. Essentially .
 
 Protocol agnostic version:
 
     <script type='text/javascript' src='//www.brick-anew.com/myJS.js'></script>
 
-Setting up all images and JS in this way will cure insecure page errors in the vast majority of situations where you may be seeing that particular error.
+Refactoring all images and JS in this way will solve insecure page errors in the vast majority of situations where you may be seeing that particular error.
 
 
 ###2.)###
@@ -77,7 +77,7 @@ Say we want to get rid of a particular div with id `myDiv` but we can't remove t
 
 Remove using jQuery after DOM ready:
     
-    $(function(){
+    $(document).ready(function(){
     	$('#myDiv').remove();
     });
 
@@ -119,13 +119,13 @@ I would first investigate why Magento is making this re-write and attempt to dit
 
 Although escaping in this way may work, it is considered best practice to encode the path to prevent different interpretations of the path between different browsers. 
 
-This can be accomplished via JavaScript's `encodeURI()` function:
+This can be accomplished via JavaScript's `encodeURI()` function, which outputs:
 
     %2Fshop%2Ffireplace-glass-doors%2Fpage1.html
 
-You would then enter that as your Category URL Key and the browser will decode it automatically and treat it as a normal link. 
+You would then enter that as your "Category URL Key" and any browser will decode it automatically and treat it as a normal link. 
 
-Online utility I use to encode/decode URL's manually:
+Online util to encode/decode URL's:
    
     http://meyerweb.com/eric/tools/dencoder/
 
@@ -145,17 +145,19 @@ Online utility I use to encode/decode URL's manually:
 
 Let me start by saying that you shouldn't have been editing the `style.uncompressed.css` file because the Magento framework is going to be calling the minified/compressed version at `style.css`. Uncompressed/unminified files are for use in the development environment only, then are minified and deployed live. If your fix HAD been in one of those files, you would have first made the change in `style.uncompressed.css` because it is spaced and formatted to be readable by a human. The formatting, however, isn't necessary for a computer to read it and should be removed before deploying the file live to decrease file size in order to increase site load speed and decrease bandwidth cost. All of these non-essential spaces and comments are known as `syntactic sugar` and must be removed before going live, hence the existence of `style.css` to contain a version that is stripped down to a single huge line of code optimized for a browser's rendering engine but virtually unreadable to a human. 
 
-JS Beautifier is an online utility to format a file. It can unminify a minified JS/CSS/XHTML file but note that you shouldn't ever be moving from minified to unminified but rather the reverse. This tool is best to provide proper indenting, spacing and overall formatting to "beautify" your development version so it is readable and in the proper syntax:
-
-    http://jsbeautifier.org/
-
-One you are ready to minify/compress then online tools exist for this as well:
+An online tool is a good introduction to what minifying does:
 
     http://refresh-sf.com/yui/ 
 
-All development should take place in `style.uncompressed.css`, even though this file will affect nothing on the live site, because this is the only file that is readable by a human eye. Once a change is made the contents of `style.uncompressed.css` should either be run through a build script to minify it automatically or it should be run through any common code minification tool available via text editor plugin or via an online minification tool. Both files will contain exactly the same CSS functionality if done correctly, the only difference being the removal of all unnecessary spaces, comments, etc.
+On the other hand, tools exist to unminify code and to ensure proper styling of your development code, a process known as `beautifying`. JS Beautifier is an online utility to format a file and allows you to specify how code should be indented, etc. This tool is best to provide proper indenting, spacing and overall formatting to beautify your development version so it is readable and in the proper syntax. 
 
-If you want to see the difference in speed that the difference can make you may want to put up an uncompressed file, benchmark site speed, then put up the compressed version and repeat. 
+    http://jsbeautifier.org/
+
+JS Beautifier can unminify a minified JS/CSS/XHTML file but note that you shouldn't be taking a minified file and unminifying it to work off of. CSS and XHTML can unminify and be understandable, but any comments that should be in the development version would be lost if the dev version were overwritten with a beautified version of the minified file. In the case of JS, all variable names would be lost and almost totally incomprehensible because a minifier will typically replace variable names with single letters, etc. since the name only needs to be unique to its containing scope in order to be read by a browser's rendering engine.
+
+In Magento development should take place in `style.uncompressed.css`. This file will affect nothing on the live site but is the only version of the file that is readable to the human eye. Once a change is made to the contents of `style.uncompressed.css` the file should either be run through a build script to minify it automatically or it should be run through a manual tool. Both files will contain exactly the same CSS functionality if done correctly, the only difference being the removal of all unnecessary spaces, comments, etc.
+
+If you want to see the difference in speed that minification can make you may want to put up a few  uncompressed files, benchmark site speed, then put up the compressed versions and benchmark again. 
 
 Monitor Site Speed:
 
@@ -164,7 +166,7 @@ Monitor Site Speed:
 
 **Inspector Tools**
 
-Since toying with the CSS didn't help though, I would approach this by using a browser's inspector tool. For example, in later versions of Chrome there is a set of "developer tools" available from the main menu:
+Since toying with the CSS didn't help in your case, I would approach this by using a browser's inspector tool. For example, in later versions of Chrome there is a set of "developer tools" available from the main menu:
 
     Chrome Main Menu > View > Developer > Developer Tools
 
@@ -178,7 +180,7 @@ Also displayed in the inspector tool are all the CSS rules being applied to the 
 
 **Future Proofing**
 
-On another side note, when I inspected the `<ul>` elements on the home page I am seeing many browser specific prefixes to support CSS definitions that have not been formalized and included in the official releases of CSS standards currently. However, on the elements using prefixes I am not seeing any future proofing in place. "Future proofing" is a way to make sure the code will not break in time with the release of new browsers that may drop support for the prefixes, a likely scenario once the experimental CSS definitions are standardized. Right now on unordered lists on the home page I am seeing properties like `-webkit-margin-end` to provide support for the WebKit rendering engine currently used by Chrome and Safari, as well as `-moz-margin-end` to provide support for Firefox and its Gecko engine. However, I see no subsequent definition for `margin-end` without the prefix. If it can reasonably be assumed that a CSS feature will become standard, a definition such as `margin-end` with no prefix should be specified in addition to the prefixed definitions to future proof the code, so that if prefixes are not supported in future browsers the rule will still be applied if `margin-end` has by that point become standard.
+On another side note, when I inspected the `<ul>` elements on the home page I am seeing many browser specific prefixes to support CSS definitions that have not been formalized and included in the official releases of CSS standards currently. However, on the elements using prefixes I am not seeing any future proofing in place. "Future proofing" is a way to make sure the code will not break in time with the release of new browsers that may drop support for the prefixes, a likely scenario once the experimental CSS definitions are standardized. Right now on unordered lists on the home page I am seeing properties like `-webkit-margin-end` to provide support for the WebKit rendering engine currently used by Chrome and Safari, as well as `-moz-margin-end` to provide support for Firefox and its Gecko engine. However, I see no subsequent definition for `margin-end` without the prefix. If it can reasonably be assumed that a CSS feature will become standard and the future name can be assumed, a definition like `margin-end` without any prefix should be specified in addition to the prefixed definitions to `future proof` the code. If prefixes are not supported in future browser versions the rule will still be applied if use of `margin-end` has become supported by that time.
 
 
 
@@ -206,7 +208,7 @@ Let's say that the inspector tool shows that my elements in question are standar
 The links have some CSS style for normal and hovered states, but it is being set via JavaScript on DOM ready:
 
 
-    $(function(){
+    $(document).ready(function(){
     	$('nav .navLink')
     		.css({
     			'background':'#000',
@@ -226,7 +228,7 @@ The links have some CSS style for normal and hovered states, but it is being set
         ;
     });
 
-If I killed that JS then my example nav links wouldn't show up as styled block elements, instead they would be normal text links. Using the inspector tool on the links with the JS still applying the style will show you all of the properties being applied so you don't have to track down the JS file unnecessarily. Since the inspector reflects what properties are being applied, you can then convert it over to plain CSS declarations for normal and hovered states:
+If I killed that JS then my example nav links wouldn't show up as styled block elements, instead appearing as normal text links. Using the inspector tool on the links while the JS is still being applied will show all properties being applied, avoiding having to track down the culprit JS file unnecessarily. Since the inspector reflects what properties are being applied, you can copy them over to plain CSS declarations to form your normal and hovered states:
 
 
     /* Normal */     
@@ -246,7 +248,7 @@ If I killed that JS then my example nav links wouldn't show up as styled block e
 
 **CSS Specificity**
 
-At that point the JS is no longer needed and the affected JS lines should either be removed or, if possible, the entire script call can be removed from the DOM tree to improve browser performance. Note that to maintain best practices in my CSS above I have carried the selectors out to one level of specificity by including `nav` to indicate where target elements are contained, thereby avoiding conflicts with any other instances of a class of `navLink` that may lie outside of the `<nav>` element.At least one level of specificity is considered best practice and I also defined my selector as `a.navLink` rather than `.navLink` to indicate that the properties should only be applied to `<a>` elements of class `navLink` rather than any element with that class.
+After conversion to CSS rules the JS is no longer needed and the affected JS lines should either be removed or, if possible, the entire script call can be removed from the DOM tree to improve browser performance. Note that to maintain best practices in my CSS above I have carried the selectors out to one level of specificity by including `nav` to indicate where target elements are contained, thereby avoiding conflicts with any other instances of a class of `navLink` that may lie outside of the `<nav>` element. At least one level of specificity is considered best practice, while the example also defines the selector as `a.navLink` rather than `.navLink` to indicate that the properties should only be applied to `<a>` elements of class `navLink` rather than any element with that class.
 
 To understand the hierarchy of CSS selectors and learn more about specificity, Smashing Magazine has a good write up on specificity and selector precedence:
 
