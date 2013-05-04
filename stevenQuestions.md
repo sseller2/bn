@@ -1,6 +1,8 @@
-#Questions from Steven#
-Date: 5.2.2013
+#Magento Questions from Steven#
+**Date: 5.2.2013**
 ---------------------
+
+Although written in response to questions about the Magento e-commerce framework, I have tried to include adequate information in my answers to help solve potential problems I see arising and to also provide a general reference on certain topics, marked in bold below.
 
 ###1.)###
 >is there a way to simply link a cms page to the Exploded Menu? All the "hacks" I've found in the 
