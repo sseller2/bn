@@ -125,6 +125,9 @@ This can be accomplished via JavaScript's `encodeURI()` function:
 
 You would then enter that as your Category URL Key and the browser will decode it automatically and treat it as a normal link. 
 
+Online utility I use to encode/decode URL's manually:
+   
+    http://meyerweb.com/eric/tools/dencoder/
 
 
 
