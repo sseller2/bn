@@ -2,7 +2,7 @@
 
 **Date: 05.13.13**
 
-**@version: 0.0.05**
+**@version: 0.0.06**
 
 Here is my guide to installing the development environment that I am envisioning BN using on the Magento installation. Although I'm usually running Mac OS 10.x on a 64 bit chipset, for this I am going to assume that everyone is on a Windows machine, but you will need to determine if 
 you have a 32 bit or 64 bit chip architecture:
@@ -11,7 +11,7 @@ you have a 32 bit or 64 bit chip architecture:
 
 I have included a folder in this repository with installer files for 64 bit Windows and will be providing links to the download page for each tool in case a 32 bit installer needs to be retrieved.
 
-64-bit Windows installers for all bolded download links can be found in one place here:
+**64-bit Windows installers for all bolded download links, but in one place:**
 
     https://github.com/fslone/bn/tree/master/programs
 
@@ -27,7 +27,9 @@ For our remote server we will be using the site you're on, `GitHub.com`, so if y
 
 **Overview of Distributed Versioning:**
 
-    Don't worry if you don't get even half of this right away, we'll explore the Git system in much more detail over time and this is just something to get you thinking. Even its creator, Linux creator Linus Torvalds, described Git as the "version control system from hell."
+    Don't worry if you don't get even half of this right away, we'll explore the Git system in much more detail 
+    over time and this is just something to get you thinking. Even its creator, Linux creator Linus Torvalds, 
+    described Git as the "version control system from hell." I can't stress how worthwhile it is to learn.
 
 Keeping a record of the different versions will give us the ability to review changes and rollback code on a piecewise basis if needed. `Git` is known as a  `Version Control System (VCS)` for this reason. If you have used the other popular versioning system `Subversion` before you will likely be familiar with many of the concepts. Whereas Subversion only has one repository stored on a remote server, Git has a system with a central repository, as well as each user's local repositories on his own computer. In this way Git is a **distributed** versioning system, while Subversion is a **centralized** versioning system. The same model of centralized vs. distributed is the reason Napster, which was centralized, could be shut down as a download service although torrenting, which is distributed, can never be shut down. Just like torrents, you want lots and lots of copies spread across multiple users so that the system can never be brought completely down, meaning your code doesn't ever get totally lost.
 
