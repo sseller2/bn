@@ -2,7 +2,7 @@
 
 **Date: 05.13.13**
 
-**@version: 0.0.04**
+**@version: 0.0.05**
 
 Here is my guide to installing the development environment that I am envisioning BN using on the Magento installation. Although I'm usually running Mac OS 10.x on a 64 bit chipset, for this I am going to assume that everyone is on a Windows machine, but you will need to determine if 
 you have a 32 bit or 64 bit chip architecture:
