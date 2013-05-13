@@ -1,21 +1,21 @@
-#BN Development Environment#
+#BN Development Environment [Windows]#
 
 **Date: 05.13.13**
 
-**@version: 0.0.07**
+**@version: 0.0.08**
 
-Here is my guide to installing the development environment that I am envisioning BN using on the Magento installation. Although I'm usually running Mac OS 10.x on a 64 bit chipset, for this I am going to assume that everyone is on a Windows machine, but you will need to determine if 
-you have a 32 bit or 64 bit chip architecture:
+Here is my guide to installing the development environment that I am envisioning BN using on the Magento installation. To begin installing programs you will need to determine if 
+you have a 32 bit or 64 bit chip architecture for Windows:
 
     http://support.microsoft.com/kb/827218
 
-I have included a folder in this repository with installer files for 64 bit Windows and will be providing links to the download page for each tool in case a 32 bit installer needs to be retrieved.
+I have included a folder in this repository with installer files for 64 bit Windows and will be providing a download link for each tool in case a 32 bit installer needs to be retrieved.
 
 **64-bit Windows installers for all bolded download links, but in one place:**
 
     https://github.com/fslone/bn/tree/master/programs
 
-All tools listed are supported on both Windows and GNU/Unix OS platforms. Since I'm not looking at a Windows machine currently some steps may differ slightly such as a minor difference in menu name, etc. 
+Since I'm not looking at a Windows machine currently some steps may differ slightly such as a minor difference in menu name, etc. 
 
 Please be open minded about using the new tools for the first couple weeks and then we can re-evalute and tweak our setup as necessary. Note that use of all of these techniques is **required** so as to maintain the code properly and allow multiple developers to be working on it.
 
@@ -82,7 +82,7 @@ To try the technique on your own, start Fiddler and load `http://www.brick-anew.
     	display:none !important;
     }
 
-Once mapped properly in Fiddler, reload `http://www.brick-anew.com`. If working properly the site will appear totally blank, though only to you and only while Fiddler is running. Be sure to stop all file mapping when you are done, since you'd be quite confused if you forgot and the site seemed to be gone the next time you visited.
+Once mapped properly in Fiddler, do an F5 refresh to clear your cache and reload `http://www.brick-anew.com`. If working properly the site will appear totally blank, though only to you and only while Fiddler is running. Be sure to stop all file mapping when you are done, since you'd be quite confused if you forgot and the site seemed to be gone the next time you visited :)
 
 
 
