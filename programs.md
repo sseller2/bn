@@ -23,7 +23,7 @@ Please be open minded about using the new tools for the first couple weeks and t
 
 `Git` is a version control system used to store files in locations known as `repositories`. These repositories, or "repos," are stored on your local machine as well as usually being sent back for storage on a remote server. 
 
-For our remote server we will be using the site you're on, `GitHub.com`, so if you plan on making code edits you will need to create a free account. GitHub is just a service that runs a `Git` enabled server that we are going to be pushing our code to, and it is here we will store all of our code and a record of the changes made to that code. Once you have created your account, please e-mail your username to `fslone+bn@gmail.com` with the subject `GH User`. You can then install `Git` on your local machine as described later.
+For our remote server we will be using the site you're on, `GitHub.com`, so if you plan on making code edits you will need to create a free account. GitHub is just a service that runs a `Git` enabled server that we are going to be pushing our code to, and it is here we will store all of our code and a record of the changes made to that code. Once you have created your account, please e-mail your username to `fslone+bn@gmail.com` with the subject `GH User`. You can then go to the URL for the master BN `repository` at `https://github.com/fslone/bn` and click `Fork` in the upper right hand corner. This will create a copy of the entire `repository` on your account.
 
 **Overview of Distributed Versioning:**
 
