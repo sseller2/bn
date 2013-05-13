@@ -2,7 +2,7 @@
 
 **Date: 05.13.13**
 
-**@version: 0.0.01**
+**@version: 0.0.02**
 
 Here is my guide to installing the development environment that I am envisioning BN using on the Magento installation. Although I'm usually running Mac OS 10.x on a 64 bit chipset, for this I am going to assume that everyone is on a Windows machine, but you will need to determine if 
 you have a 32 bit or 64 bit chip architecture:
@@ -34,6 +34,25 @@ Download Page:
     http://www.sublimetext.com/2
 
 It is free but will continue to ask you to purchase the software periodically until you do so, although you can decline each time without penalty.
+
+**Debugging Proxy**
+
+A `debugging proxy` will allow you to monitor all TCP/IP traffic, showing you all requests and responses to and from the port your internet connection is using. While this has many uses, we will first be using it to take a local file and serve it through our browser as if it were live on the site. By doing this you can see what effect a code change is going to have on the site, but have the change only be visible to you until it is put up on the live site.
+
+We begin by saving our change to the file on our local machine. We then map it to the request that our browser makes to the website's server for the file that we need to preview. For Windows, Fiddler Proxy is the best alternative.
+
+Fiddler Download:
+
+    http://fiddler2.com/get-fiddler
+
+
+Once installed, the local file needs to be mapped to the URI for the corresponding remote file. One user explains how to do this using Fiddler:
+
+    Fiddler has this feature; just click the AutoResponder tab and map URLs to local files. Thousands of people do this every day.
+
+    See also video #5 here: http://www.fiddler2.com/fiddler/help/video/default.asp
+
+    **Source: **http://stackoverflow.com/questions/4821224/intercept-and-use-local-files-in-http-requests
 
 
 **Sublime Package Control**
