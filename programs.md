@@ -82,7 +82,14 @@ To try the technique on your own, start Fiddler and load `http://www.brick-anew.
 
 Once mapped properly in Fiddler, reload `http://www.brick-anew.com`. If working properly the site will appear totally blank, though only to you and only while Fiddler is running. Be sure to stop all file mapping when you are done, since you'd be quite confused if you forgot and the site seemed to be gone the next time you visited.
 
+##Part 2##
 
+
+**Sublime Package Control**
+
+You'll be installing several plugins for Sublime so that you can perform most necessary tasks from within a single program.
+
+    http://wbond.net/sublime_packages/package_control/installation
 
 
 
