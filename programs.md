@@ -2,7 +2,7 @@
 
 **Date: 05.13.13**
 
-**@version: 0.0.02**
+**@version: 0.0.03**
 
 Here is my guide to installing the development environment that I am envisioning BN using on the Magento installation. Although I'm usually running Mac OS 10.x on a 64 bit chipset, for this I am going to assume that everyone is on a Windows machine, but you will need to determine if 
 you have a 32 bit or 64 bit chip architecture:
@@ -23,7 +23,7 @@ Please be open minded about using the new tools for the first couple weeks and t
 
 `Git` is a version control system used to store files in locations known as `repositories`. These repositories, or "repos," are stored on your local machine as well as usually being sent back for storage on a remote server. For our remote server we will be using the current site, `GitHub.com`, so if you plan on making code edits first you will need to create an account. GitHub will manage the Git server that we are going to be pushing our code to, as well as tracking all changes within the Git `Version Control System`.
 
-Note that Git can be run on any Unix server, but for simplicity we will be using GitHub.
+Note that Git can be run on any Unix server, but for simplicity we will be using GitHub. Once you have created your account, please e-mail your username to `fslone+bn@gmail.com` with the subject `GH User`.
 
 **Text Editor**
 
